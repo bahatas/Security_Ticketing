@@ -1,6 +1,5 @@
 package com.cybertek.config;
 
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,21 +15,19 @@ import java.util.Set;
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-
-//        if(roles.contains("Admin")){
-//            response.sendDirect("/user/create");
-//
-//        }
-//         if(roles.contains("Admin")){
-//            response.sendDirect("/user/create");
-//        }
-//         if(roles.contains("Admin")){
-//            response.sendDirect("/user/create");
-//        }
-
+        if(roles.contains("Admin")){
+            httpServletResponse.sendRedirect("/user/create");
+        }
+        if(roles.contains("Manager")){
+            httpServletResponse.sendRedirect("/task/create");
+        }
+        if(roles.contains("Employee")){
+            httpServletResponse.sendRedirect("/task/employee");
+        }
 
     }
 }
