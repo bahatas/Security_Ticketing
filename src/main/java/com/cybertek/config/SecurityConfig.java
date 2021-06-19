@@ -29,26 +29,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("project/**").hasAuthority("Manager")
                 .antMatchers("/task/employee/**").hasAuthority("Employee")
                 .antMatchers("/task/**").hasAuthority("Manager")
-                .antMatchers("/",
+                .antMatchers(
+                        "/",
                         "login",
                         "fragments/**",
                         "assets/**",
                         "images/**"
-                        ).permitAll()
+                ).permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 //.defaultSuccessUrl("/welcome")
                 .successHandler(authSuccessHandler)
+                .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout" ))
-                    .logoutSuccessUrl("/login")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
                 .and()
                 .rememberMe()
                 .tokenValiditySeconds(120)
-                .key("cybertekSecret");
+                .key("cybertekSecret")
+                .userDetailsService(securityService);
 
     }
 }

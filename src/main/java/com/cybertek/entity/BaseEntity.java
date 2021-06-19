@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
+@EntityListeners(BaseEntityListener.class)
 public class BaseEntity {
 
     @Id
@@ -29,7 +30,7 @@ public class BaseEntity {
     @Column(nullable = false)
     public Long lastUpdateUserId;
 
-    private Boolean isDeleted=false;
+    public Boolean isDeleted=false;
 
 //    @PrePersist
 //    private void onPrePersist(){
